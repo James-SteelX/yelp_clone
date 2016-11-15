@@ -32,7 +32,15 @@ feature "user can sign in and out" do
     it 'should not see a sign in link' do
       visit('/')
       expect(page).not_to have_link('Sign up')
-      expect(page).not_to have_link('Sign in') 
+      expect(page).not_to have_link('Sign in')
+    end
+  end
+
+  context 'users not signed in' do
+    it 'should not allow user to add a restarant' do
+      visit('/')
+      click_link('Add a restaurant')
+      expect(page).to have_content('Log in')
     end
   end
 end

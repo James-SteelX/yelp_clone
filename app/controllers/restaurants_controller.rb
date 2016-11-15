@@ -1,4 +1,7 @@
 class RestaurantsController < ApplicationController
+
+	before_action :authenticate_user!, :except => [:index, :show]
+	
 	def index
 		@restaurants = Restaurant.all
 	end
@@ -17,7 +20,7 @@ class RestaurantsController < ApplicationController
 		  redirect_to '/restaurants'
 		else
 			render 'new'
-		end 
+		end
 	end
 
 	def edit
