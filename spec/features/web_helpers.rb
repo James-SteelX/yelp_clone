@@ -6,10 +6,10 @@ def sign_in
   click_button('Sign in')
 end
 
-def sign_up
+def sign_up(email = 'test@example.com')
   visit('/')
   click_link('Sign up')
-  fill_in('Email', with: 'test@example.com')
+  fill_in('Email', with: email)
   fill_in('Password', with: 'testtest')
   fill_in('Password confirmation', with: 'testtest')
   click_button('Sign up')
@@ -20,9 +20,8 @@ def sign_out
   click_link('Sign out')
 end
 
-def add_restaurant
+def add_restaurant(name = 'KFC')
   visit('restaurants/new')
-  fill_in('Name', with: 'KFC')
-  fill_in('Description', with: 'Deep fried goodness')
+  fill_in('Name', with: name)
   click_button('Create Restaurant')
 end

@@ -15,7 +15,7 @@ context 'no restaurants have been added' do
   end
 
 context 'restaurants have been added' do
-  before do Restaurant.create(name: 'KFC')
+  before do add_restaurant
   end
 
   scenario 'display restaurants' do
@@ -38,20 +38,20 @@ end
 
 context 'viewing restaurants' do
 
-  let!(:kfc){ Restaurant.create(name:'KFC') }
+
 
   scenario 'lets a user view a restaurant' do
+    add_restaurant
     visit '/restaurants'
     click_link 'KFC'
     expect(page).to have_content 'KFC'
-    expect(current_path).to eq "/restaurants/#{kfc.id}"
+    expect(current_path).to eq "/restaurants/#{Restaurant.last.id}"
   end
 end
 
   context 'editing restaurants' do
-    before { Restaurant.create name: 'KFC', description: 'Deep fried goodness'}
-
     scenario 'let a user edit a restaurant' do
+      add_restaurant
       visit '/restaurants'
       click_link 'Edit KFC'
       fill_in 'Name', with: 'Kentucky Fried Chicken'
@@ -64,10 +64,11 @@ end
   end
 
   context 'deleting restaurants' do
-    before { Restaurant.create name: 'KFC', description: 'Deep fired goodness' }
+
 
     scenario 'removes a restaurant when a user clicks a delete link' do
-      visit 'restaurants'
+      add_restaurant
+      visit '/restaurants'
       click_link 'Delete KFC'
       expect(page).not_to have_content 'KFC'
       expect(page).to have_content 'Restaurant deleted successfully'
